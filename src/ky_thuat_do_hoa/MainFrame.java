@@ -2,10 +2,12 @@ package ky_thuat_do_hoa;
 
 public class MainFrame extends javax.swing.JFrame {
 
+    private final Bai1 bai1 = new Bai1();
     private final Bai2 bai2 = new Bai2();
     
     public MainFrame() {
         initComponents();
+        view.add("Bai 1", bai1);
         view.add(bai2);
     }
 

@@ -1,4 +1,3 @@
-
 package ky_thuat_do_hoa;
 
 import java.awt.BasicStroke;
