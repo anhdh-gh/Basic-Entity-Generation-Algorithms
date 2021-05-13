@@ -8,7 +8,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         view.add("Bai 1", bai1);
-        view.add("Bai2", bai2);
+        view.add("Bai 2", bai2);
     }
 
     @SuppressWarnings("unchecked")

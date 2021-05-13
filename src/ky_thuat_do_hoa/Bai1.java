@@ -1,12 +1,16 @@
 package ky_thuat_do_hoa;
 
 import java.awt.*;
+import java.util.*;
 import javax.swing.*;
 
 public class Bai1 extends JPanel {
     
+    private final ArrayList<Point> points;
+    
     public Bai1() {
         initComponents();
+        points = new ArrayList<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -15,36 +19,51 @@ public class Bai1 extends JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        showPoint = new javax.swing.JTextArea();
+        showPoints = new javax.swing.JTextArea();
         controller = new javax.swing.JPanel();
         start = new javax.swing.JButton();
         quick = new javax.swing.JButton();
         reset = new javax.swing.JButton();
 
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Points", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 14))); // NOI18N
 
-        showPoint.setEditable(false);
-        showPoint.setColumns(20);
-        showPoint.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        showPoint.setRows(5);
-        showPoint.setOpaque(false);
-        jScrollPane1.setViewportView(showPoint);
+        showPoints.setEditable(false);
+        showPoints.setColumns(20);
+        showPoints.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        showPoints.setRows(5);
+        showPoints.setOpaque(false);
+        jScrollPane1.setViewportView(showPoints);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.LINE_START);
 
         controller.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Controller", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 14))); // NOI18N
 
         start.setText("Start");
+        start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startActionPerformed(evt);
+            }
+        });
         controller.add(start);
 
         quick.setText("Quick");
         controller.add(quick);
 
         reset.setText("Reset");
+        reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetActionPerformed(evt);
+            }
+        });
         controller.add(reset);
 
         jPanel1.add(controller, java.awt.BorderLayout.PAGE_END);
@@ -52,10 +71,64 @@ public class Bai1 extends JPanel {
         add(jPanel1, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        if(points.isEmpty()) 
+            this.addPoint(evt.getX(), evt.getY());
+        else if(points.size() == 1)
+            this.addPoint(evt.getX(), evt.getY());
+    }//GEN-LAST:event_formMouseClicked
+
+    private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
+        if(points.size() == 2) {
+            this.bresenham(points.get(0).getX(), points.get(0).getY(), points.get(1).getX(), points.get(1).getY());           
+        }
+    }//GEN-LAST:event_startActionPerformed
+
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+        points.clear();
+        showPoints.setText("");
+        this.repaint();
+    }//GEN-LAST:event_resetActionPerformed
+
+    private void addPoint(int x, int y) {
+        if(points.isEmpty()) {
+            showPoints.append("Start point: ");
+            points.add(new Point(x, y, 5, Color.RED));
+        }
+        else if(points.size() == 1) {
+            showPoints.append("End point: ");
+            points.add(new Point(x, y, 5, Color.RED));
+        }        
+        else {
+            points.add(points.size() - 1, new Point(x, y, 5, Color.RED));
+        }
+        showPoints.append("x = " + x + ", y = " + y + "\n");
+        this.repaint();
+    }
+    
+    private void bresenham(int x1, int y1, int x2, int y2) {
+        double k = (double)(y2 - y1)/(x2 - x1);
+        int y = y1;
+        int dx = x2 - x1;
+        int dy = y2 - y1;
+        int p = 2*dy - dx;
+        for(int x = x1 ; x <= x2 ; x++) {
+            if(p <= 0) 
+                p+=2*dy;
+            else {
+                p+=2*(dy-dx);
+                y++;
+            }
+            addPoint(x, y);
+        }
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); 
-
+        points.forEach(point -> {
+            point.draw(g);
+        });
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -64,7 +137,7 @@ public class Bai1 extends JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton quick;
     private javax.swing.JButton reset;
-    private javax.swing.JTextArea showPoint;
+    private javax.swing.JTextArea showPoints;
     private javax.swing.JButton start;
     // End of variables declaration//GEN-END:variables
 }
