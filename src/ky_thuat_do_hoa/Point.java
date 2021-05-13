@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ky_thuat_do_hoa;
 
 import java.awt.BasicStroke;
@@ -10,10 +6,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-/**
- *
- * @author nguye
- */
 public class Point {
     private int x, y, width;
     private Color color;
