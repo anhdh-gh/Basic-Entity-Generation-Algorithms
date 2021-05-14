@@ -7,13 +7,11 @@ import javax.swing.*;
 public class Bai2 extends JPanel {
 
     private ArrayList<Point> listPoint;
-    private Thread thread;
     private Point a, b;
 
     public Bai2() {
         initComponents();
         listPoint = new ArrayList<>();
-        thread = new Thread();
     }
 
     @SuppressWarnings("unchecked")
@@ -25,7 +23,6 @@ public class Bai2 extends JPanel {
         showPointArea = new javax.swing.JTextArea();
         controller = new javax.swing.JPanel();
         startButton = new javax.swing.JButton();
-        quickButton = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
 
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -58,9 +55,6 @@ public class Bai2 extends JPanel {
         });
         controller.add(startButton);
 
-        quickButton.setText("Quick");
-        controller.add(quickButton);
-
         resetButton.setText("Reset");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,20 +82,24 @@ public class Bai2 extends JPanel {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         // TODO add your handling code here:
-        double dx = b.getX() - a.getX();
-        double dy = b.getY() - a.getY();
-        double k =  dy / dx;System.out.println(k);
-        if(0 < k  && k < 1 || -1 < k && k < 0) {
-            if(a.getX() > b.getX()) {
-                this.midPoint(b, a, k);
-            } else {
-                this.midPoint(a, b, k);
-            }
-        } else if(k > 1 || k < -1){
-            if(a.getY() > b.getY()) {
-                this.midPoint(b, a, k);
-            } else {
-                this.midPoint(a, b, k);
+        while (listPoint.size() == 2) {
+            double dx = b.getX() - a.getX();
+            double dy = b.getY() - a.getY();
+            double k = dy / dx;
+            System.out.println(k);
+            showPointArea.append("k = " + k + "\n");
+            if (0 < k && k < 1 || -1 < k && k < 0) {
+                if (a.getX() > b.getX()) {
+                    this.midPoint(b, a, k);
+                } else {
+                    this.midPoint(a, b, k);
+                }
+            } else if (k > 1 || k < -1) {
+                if (a.getY() > b.getY()) {
+                    this.midPoint(b, a, k);
+                } else {
+                    this.midPoint(a, b, k);
+                }
             }
         }
     }//GEN-LAST:event_startButtonActionPerformed
@@ -124,15 +122,15 @@ public class Bai2 extends JPanel {
     }
 
     private void midPoint(Point st, Point end, double k) {
-        
+
         double dx = end.getX() - st.getX();
         double dy = end.getY() - st.getY();
-        
-        if(0 < k && k < 1) {
+
+        if (0 < k && k < 1) {
             int y = st.getY();
-            double d = dy - dx/2;
-            for(int x = st.getX() + 1; x < end.getX(); x++) {
-                if(d <= 0) {
+            double d = dy - dx / 2;
+            for (int x = st.getX() + 1; x < end.getX(); x++) {
+                if (d <= 0) {
                     d += dy;
                 } else {
                     y++;
@@ -140,11 +138,11 @@ public class Bai2 extends JPanel {
                 }
                 this.addPoint(new Point(x, y, 5, Color.red));
             }
-        } else if(-1 < k && k < 0) {
+        } else if (-1 < k && k < 0) {
             int y = st.getY();
-            double d = dy + dx/2;
-            for(int x = st.getX() + 1; x < end.getX(); x++) {
-                if(d >= 0) {
+            double d = dy + dx / 2;
+            for (int x = st.getX() + 1; x < end.getX(); x++) {
+                if (d >= 0) {
                     d += dy;
 
                 } else {
@@ -153,11 +151,11 @@ public class Bai2 extends JPanel {
                 }
                 this.addPoint(new Point(x, y, 5, Color.red));
             }
-        } else if(k > 1) {
+        } else if (k > 1) {
             int x = st.getX();
-            double d = dy/2 - dx;
-            for(int y = st.getY(); y < end.getY(); y++) {
-                if(d >= 0) {
+            double d = dy / 2 - dx;
+            for (int y = st.getY(); y < end.getY(); y++) {
+                if (d >= 0) {
                     d -= dx;
 
                 } else {
@@ -166,11 +164,11 @@ public class Bai2 extends JPanel {
                 }
                 this.addPoint(new Point(x, y, 5, Color.red));
             }
-        } else if(k < -1) {
+        } else if (k < -1) {
             int x = st.getX();
-            double d = -dy/2 - dx;
-            for(int y = st.getY(); y < end.getY(); y++) {
-                if(d <= 0) {
+            double d = -dy / 2 - dx;
+            for (int y = st.getY(); y < end.getY(); y++) {
+                if (d <= 0) {
                     d -= dx;
 
                 } else {
@@ -183,15 +181,13 @@ public class Bai2 extends JPanel {
     }
 
     private void addPoint(Point p) {
-        if(listPoint.isEmpty()) {
-            showPointArea.append("Start point: ");
+        if (listPoint.isEmpty()) {
+            showPointArea.append("Point 1: ");
             listPoint.add(p);
-        }
-        else if(listPoint.size() == 1) {
-            showPointArea.append("End point: ");
+        } else if (listPoint.size() == 1) {
+            showPointArea.append("Point 2: ");
             listPoint.add(p);
-        }        
-        else {
+        } else {
             listPoint.add(p);
         }
         showPointArea.append("x = " + p.getX() + ", y = " + p.getY() + "\n");
@@ -203,7 +199,6 @@ public class Bai2 extends JPanel {
     private javax.swing.JPanel controller;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton quickButton;
     private javax.swing.JButton resetButton;
     private javax.swing.JTextArea showPointArea;
     private javax.swing.JButton startButton;
