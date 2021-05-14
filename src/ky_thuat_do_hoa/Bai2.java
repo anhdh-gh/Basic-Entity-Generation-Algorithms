@@ -2,14 +2,13 @@ package ky_thuat_do_hoa;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
-public class Bai2 extends JPanel implements Runnable {
+public class Bai2 extends JPanel {
 
     private ArrayList<Point> listPoint;
     private Thread thread;
+    private Point a, b;
 
     public Bai2() {
         initComponents();
@@ -77,26 +76,41 @@ public class Bai2 extends JPanel implements Runnable {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
-        if (listPoint.isEmpty()) {
-            listPoint.add(new Point(evt.getX(), evt.getY(), 5, Color.red));
-            showPointArea.append("Start point: x = " + evt.getX() + ", y = " + evt.getY() + "\n");
-            this.repaint();
+        if (a == null) {
+            a = new Point(evt.getX(), evt.getY(), 5, Color.red);
+            this.addPoint(a);
 
-        } else if (listPoint.size() == 1) {
-            listPoint.add(new Point(evt.getX(), evt.getY(), 5, Color.red));
-            showPointArea.append("End point: x = " + evt.getX() + ", y = " + evt.getY() + "\n");
-            this.repaint();
+        } else if (b == null) {
+            b = new Point(evt.getX(), evt.getY(), 5, Color.red);
+            this.addPoint(b);
         }
     }//GEN-LAST:event_formMouseClicked
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         // TODO add your handling code here:
-        this.midPoint();
+        double dx = b.getX() - a.getX();
+        double dy = b.getY() - a.getY();
+        double k =  dy / dx;System.out.println(k);
+        if(0 < k  && k < 1 || -1 < k && k < 0) {
+            if(a.getX() > b.getX()) {
+                this.midPoint(b, a, k);
+            } else {
+                this.midPoint(a, b, k);
+            }
+        } else if(k > 1 || k < -1){
+            if(a.getY() > b.getY()) {
+                this.midPoint(b, a, k);
+            } else {
+                this.midPoint(a, b, k);
+            }
+        }
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
         listPoint.clear();
+        a = null;
+        b = null;
         showPointArea.setText("");
         this.repaint();
     }//GEN-LAST:event_resetButtonActionPerformed
@@ -109,36 +123,77 @@ public class Bai2 extends JPanel implements Runnable {
         });
     }
 
-    private void midPoint() {
-        int x = listPoint.get(0).getX();
-        int y = listPoint.get(0).getY();
-        int x2 = listPoint.get(1).getX();
-        int dx = x2 - x;
-        int dy = listPoint.get(1).getY() - y;
-        double d = dy - dx / 2;
-        while (x < x2) {
-            if (d <= 0) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Bai2.class.getName()).log(Level.SEVERE, null, ex);
+    private void midPoint(Point st, Point end, double k) {
+        
+        double dx = end.getX() - st.getX();
+        double dy = end.getY() - st.getY();
+        
+        if(0 < k && k < 1) {
+            int y = st.getY();
+            double d = dy - dx/2;
+            for(int x = st.getX() + 1; x < end.getX(); x++) {
+                if(d <= 0) {
+                    d += dy;
+                } else {
+                    y++;
+                    d = d + dy - dx;
                 }
-                this.addPoint(new Point(x++, y, 5, Color.red));
-                d += dy;
-            } else {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Bai2.class.getName()).log(Level.SEVERE, null, ex);
+                this.addPoint(new Point(x, y, 5, Color.red));
+            }
+        } else if(-1 < k && k < 0) {
+            int y = st.getY();
+            double d = dy + dx/2;
+            for(int x = st.getX() + 1; x < end.getX(); x++) {
+                if(d >= 0) {
+                    d += dy;
+
+                } else {
+                    y--;
+                    d += dy + dx;
                 }
-                this.addPoint(new Point(x++, y++, 5, Color.red));
-                d = d + dy - dx;
+                this.addPoint(new Point(x, y, 5, Color.red));
+            }
+        } else if(k > 1) {
+            int x = st.getX();
+            double d = dy/2 - dx;
+            for(int y = st.getY(); y < end.getY(); y++) {
+                if(d >= 0) {
+                    d -= dx;
+
+                } else {
+                    x++;
+                    d += dy - dx;
+                }
+                this.addPoint(new Point(x, y, 5, Color.red));
+            }
+        } else if(k < -1) {
+            int x = st.getX();
+            double d = -dy/2 - dx;
+            for(int y = st.getY(); y < end.getY(); y++) {
+                if(d <= 0) {
+                    d -= dx;
+
+                } else {
+                    x--;
+                    d += -dy - dx;
+                }
+                this.addPoint(new Point(x, y, 5, Color.red));
             }
         }
     }
 
     private void addPoint(Point p) {
-        listPoint.add(new Point(p.getX(), p.getY(), 5, Color.red));
+        if(listPoint.isEmpty()) {
+            showPointArea.append("Start point: ");
+            listPoint.add(p);
+        }
+        else if(listPoint.size() == 1) {
+            showPointArea.append("End point: ");
+            listPoint.add(p);
+        }        
+        else {
+            listPoint.add(p);
+        }
         showPointArea.append("x = " + p.getX() + ", y = " + p.getY() + "\n");
         this.repaint();
     }
@@ -154,13 +209,4 @@ public class Bai2 extends JPanel implements Runnable {
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void run() {
-        try {
-            Thread.sleep(10);
-            this.repaint();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
-    }
 }
