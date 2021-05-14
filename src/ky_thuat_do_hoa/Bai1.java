@@ -22,7 +22,6 @@ public class Bai1 extends JPanel {
         showPoints = new javax.swing.JTextArea();
         controller = new javax.swing.JPanel();
         start = new javax.swing.JButton();
-        quick = new javax.swing.JButton();
         reset = new javax.swing.JButton();
 
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -55,9 +54,6 @@ public class Bai1 extends JPanel {
         });
         controller.add(start);
 
-        quick.setText("Quick");
-        controller.add(quick);
-
         reset.setText("Reset");
         reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +83,7 @@ public class Bai1 extends JPanel {
             int dx = x2 - x1;
             int dy = y2 - y1;
             double k = (double)dy/dx;
+            showPoints.append("k = " + k + "\n");
             if((k > 0 && k < 1) || (k > -1 && k < 0))
                 if(x1 <= x2) this.bresenham(x1, y1, x2, y2);
                 else this.bresenham(x2, y2, x1, y1);
@@ -184,7 +181,6 @@ public class Bai1 extends JPanel {
     private javax.swing.JPanel controller;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton quick;
     private javax.swing.JButton reset;
     private javax.swing.JTextArea showPoints;
     private javax.swing.JButton start;
