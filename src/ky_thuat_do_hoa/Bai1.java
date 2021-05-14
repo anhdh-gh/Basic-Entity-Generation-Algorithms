@@ -80,7 +80,19 @@ public class Bai1 extends JPanel {
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
         if(points.size() == 2) {
-            this.bresenham(points.get(0).getX(), points.get(0).getY(), points.get(1).getX(), points.get(1).getY());           
+            int x1 = points.get(0).getX();
+            int y1 = points.get(0).getY();
+            int x2 = points.get(1).getX();
+            int y2 = points.get(1).getY();
+            int dx = x2 - x1;
+            int dy = y2 - y1;
+            double k = (double)dy/dx;
+            if((k > 0 && k < 1) || (k > -1 && k < 0))
+                if(x1 <= x2) this.bresenham(x1, y1, x2, y2);
+                else this.bresenham(x2, y2, x1, y1);
+            else if(k > 1 || k < -1)
+                if(y1 <= y2) this.bresenham(x1, y1, x2, y2);
+                else this.bresenham(x2, y2, x1, y1);                
         }
     }//GEN-LAST:event_startActionPerformed
 
@@ -92,11 +104,11 @@ public class Bai1 extends JPanel {
 
     private void addPoint(int x, int y) {
         if(points.isEmpty()) {
-            showPoints.append("Start point: ");
+            showPoints.append("Point 1: ");
             points.add(new Point(x, y, 5, Color.RED));
         }
         else if(points.size() == 1) {
-            showPoints.append("End point: ");
+            showPoints.append("Point 2: ");
             points.add(new Point(x, y, 5, Color.RED));
         }        
         else {
@@ -109,7 +121,6 @@ public class Bai1 extends JPanel {
     private void bresenham(int x1, int y1, int x2, int y2) {
         int dx = x2 - x1;
         int dy = y2 - y1;
-        
         double k = (double)dy/dx;
         if(k > 0 && k < 1) {
             int y = y1;
@@ -127,7 +138,7 @@ public class Bai1 extends JPanel {
             int x = x1;
             int p=dy-2*dx;
             for(int y = y1 ; y <= y2 ; y++) {
-                if(p >= 0) p -= 2*dx;
+                if(p > 0) p -= 2*dx;
                 else {
                     p += 2*(dy-dx);
                     x++;
@@ -139,7 +150,7 @@ public class Bai1 extends JPanel {
             int y = y1;
             int p=2*dy+dx;
             for(int x = x1 ; x <= x2 ; x++) {
-                if(p >= 0) p += 2*dy;
+                if(p > 0) p += 2*dy;
                 else {
                     p += 2*(dy+dx);
                     y--;
@@ -147,7 +158,7 @@ public class Bai1 extends JPanel {
                 addPoint(x, y);
             }            
         }
-        else {
+        else if(k < -1) {
             int x = x1;
             int p=-dy-2*dx;
             for(int y = y1 ; y <= y2 ; y++) {

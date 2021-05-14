@@ -208,5 +208,4 @@ public class Bai2 extends JPanel {
     private javax.swing.JTextArea showPointArea;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
-
 }
