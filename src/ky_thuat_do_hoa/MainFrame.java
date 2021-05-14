@@ -3,7 +3,7 @@ package ky_thuat_do_hoa;
 public class MainFrame extends javax.swing.JFrame {
 
     private final Bai1 bai1 = new Bai1();
-    private Bai2 bai2 = new Bai2();
+    private final Bai2 bai2 = new Bai2();
     
     public MainFrame() {
         initComponents();

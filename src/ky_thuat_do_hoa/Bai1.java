@@ -107,19 +107,57 @@ public class Bai1 extends JPanel {
     }
     
     private void bresenham(int x1, int y1, int x2, int y2) {
-        double k = (double)(y2 - y1)/(x2 - x1);
-        int y = y1;
         int dx = x2 - x1;
         int dy = y2 - y1;
-        int p = 2*dy - dx;
-        for(int x = x1 ; x <= x2 ; x++) {
-            if(p <= 0) 
-                p+=2*dy;
-            else {
-                p+=2*(dy-dx);
-                y++;
+        
+        double k = (double)dy/dx;
+        if(k > 0 && k < 1) {
+            int y = y1;
+            int p = 2*dy - dx;
+            for(int x = x1 ; x <= x2 ; x++) {
+                if(p < 0) p += 2*dy;
+                else {
+                    p += 2*(dy-dx);
+                    y++;
+                }              
+                addPoint(x, y);
             }
-            addPoint(x, y);
+        }
+        else if(k > 1) {
+            int x = x1;
+            int p=dy-2*dx;
+            for(int y = y1 ; y <= y2 ; y++) {
+                if(p >= 0) p -= 2*dx;
+                else {
+                    p += 2*(dy-dx);
+                    x++;
+                }
+                addPoint(x, y);
+            }
+        }
+        else if(k > -1 && k < 0) {
+            int y = y1;
+            int p=2*dy+dx;
+            for(int x = x1 ; x <= x2 ; x++) {
+                if(p >= 0) p += 2*dy;
+                else {
+                    p += 2*(dy+dx);
+                    y--;
+                }              
+                addPoint(x, y);
+            }            
+        }
+        else {
+            int x = x1;
+            int p=-dy-2*dx;
+            for(int y = y1 ; y <= y2 ; y++) {
+                if(p < 0) p -= 2*dx;
+                else {
+                    p -= 2*(dy+dx);
+                    x--;
+                }
+                addPoint(x, y);
+            }
         }
     }
     
