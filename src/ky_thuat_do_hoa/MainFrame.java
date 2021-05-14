@@ -4,11 +4,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     private final Bai1 bai1 = new Bai1();
     private final Bai2 bai2 = new Bai2();
+    private Bai3_Midpoint bai3_midpoint = new Bai3_Midpoint();
     
     public MainFrame() {
         initComponents();
-        view.add("Bai 1", bai1);
-        view.add("Bai 2", bai2);
+        view.add("Đoạn thẳng Bresemham", bai1);
+        view.add("Đoạn thẳng Midpoint", bai2);
+        view.add("Đường tròn Midpoint", bai3_midpoint);
     }
 
     @SuppressWarnings("unchecked")
