@@ -110,7 +110,7 @@ public class Bai1 extends JPanel {
             points.add(new Point(x, y, this.width, Color.RED));
         }        
         else {
-            points.add(points.size() - 1, new Point(x, y, this.width, Color.RED));
+            points.add(points.size() - 1, new Point(x, y, 1, Color.RED));
         }
         showPoints.append("x = " + x + ", y = " + y + "\n");
         this.repaint();
@@ -123,11 +123,11 @@ public class Bai1 extends JPanel {
         if(k > 0 && k < 1) {
             int y = y1;
             int p = 2*dy - dx;
-            for(int x = x1 ; x <= x2 ; x+=this.width) {
+            for(int x = x1 ; x <= x2 ; x++) {
                 if(p < 0) p += 2*dy;
                 else {
                     p += 2*(dy-dx);
-                    y+=this.width;
+                    y++;
                 }              
                 addPoint(x, y);
             }
@@ -135,11 +135,11 @@ public class Bai1 extends JPanel {
         else if(k > 1) {
             int x = x1;
             int p=dy-2*dx;
-            for(int y = y1 ; y <= y2 ; y+=this.width) {
+            for(int y = y1 ; y <= y2 ; y++) {
                 if(p > 0) p -= 2*dx;
                 else {
                     p += 2*(dy-dx);
-                    x+=this.width;
+                    x++;
                 }
                 addPoint(x, y);
             }
@@ -147,11 +147,11 @@ public class Bai1 extends JPanel {
         else if(k > -1 && k < 0) {
             int y = y1;
             int p=2*dy+dx;
-            for(int x = x1 ; x <= x2 ; x+=this.width) {
+            for(int x = x1 ; x <= x2 ; x++) {
                 if(p > 0) p += 2*dy;
                 else {
                     p += 2*(dy+dx);
-                    y-=this.width;
+                    y--;
                 }              
                 addPoint(x, y);
             }            
@@ -159,11 +159,11 @@ public class Bai1 extends JPanel {
         else if(k < -1) {
             int x = x1;
             int p=-dy-2*dx;
-            for(int y = y1 ; y <= y2 ; y+=this.width) {
+            for(int y = y1 ; y <= y2 ; y++) {
                 if(p < 0) p -= 2*dx;
                 else {
                     p -= 2*(dy+dx);
-                    x-=this.width;
+                    x--;
                 }
                 addPoint(x, y);
             }

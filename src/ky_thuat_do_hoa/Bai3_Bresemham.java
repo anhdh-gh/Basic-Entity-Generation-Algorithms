@@ -107,8 +107,13 @@ public class Bai3_Bresemham extends JPanel {
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void addPoint(int x, int y) {
-        if(points.isEmpty()) showPointArea.append("Center: ");
-        points.add(new Point(x, y, this.width, Color.RED));
+        if(points.isEmpty()) {
+            showPointArea.append("Center: ");
+            points.add(new Point(x, y, this.width, Color.RED));
+        }
+        else {
+            points.add(new Point(x, y, 1, Color.RED));
+        }
         showPointArea.append("x = " + x + ", y = " + y + "\n");
         this.repaint();
     }    
@@ -124,11 +129,11 @@ public class Bai3_Bresemham extends JPanel {
         int y = radiusValue;
         int p = 3 - 2*radiusValue;
         pc(xc, yc, radiusValue, 0);
-        for(int x = 0 ; x < y ; x+=this.width) {
+        for(int x = 0 ; x < y ; x++) {
             if(p < 0) p += 4*x+6;
             else {
                 p += 4*(x-y)+10;
-                y-=this.width;
+                y--;
             }
             pc(xc, yc, x, y);
             pc(xc, yc, y, x);
