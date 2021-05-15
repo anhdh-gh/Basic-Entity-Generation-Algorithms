@@ -4,11 +4,11 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 
-public class Bai3_Bresemham extends JPanel {
+public class Bai4_Bresemham extends JPanel {
 
     private final ArrayList<Point> points;
     
-    public Bai3_Bresemham() {
+    public Bai4_Bresemham() {
         initComponents();
         points = new ArrayList<>();
     }
@@ -24,7 +24,10 @@ public class Bai3_Bresemham extends JPanel {
         startButton = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        radius = new javax.swing.JSlider();
+        jPanel3 = new javax.swing.JPanel();
+        radiusX = new javax.swing.JSlider();
+        jPanel4 = new javax.swing.JPanel();
+        radiusY = new javax.swing.JSlider();
 
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -68,18 +71,37 @@ public class Bai3_Bresemham extends JPanel {
 
         add(jPanel1, java.awt.BorderLayout.LINE_START);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Radius", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 14))); // NOI18N
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
 
-        radius.setMajorTickSpacing(25);
-        radius.setMaximum(300);
-        radius.setMinorTickSpacing(5);
-        radius.setPaintLabels(true);
-        radius.setPaintTicks(true);
-        radius.setToolTipText("");
-        radius.setValue(150);
-        radius.setValueIsAdjusting(true);
-        jPanel2.add(radius, java.awt.BorderLayout.PAGE_START);
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RadiusX", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        radiusX.setMajorTickSpacing(25);
+        radiusX.setMaximum(300);
+        radiusX.setMinorTickSpacing(5);
+        radiusX.setPaintLabels(true);
+        radiusX.setPaintTicks(true);
+        radiusX.setToolTipText("");
+        radiusX.setValue(150);
+        radiusX.setValueIsAdjusting(true);
+        jPanel3.add(radiusX, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanel3);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RadiusY", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        radiusY.setMajorTickSpacing(25);
+        radiusY.setMaximum(300);
+        radiusY.setMinorTickSpacing(5);
+        radiusY.setPaintLabels(true);
+        radiusY.setPaintTicks(true);
+        radiusY.setToolTipText("");
+        radiusY.setValue(150);
+        radiusY.setValueIsAdjusting(true);
+        jPanel4.add(radiusY, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanel4);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
@@ -93,9 +115,11 @@ public class Bai3_Bresemham extends JPanel {
         if(points.size() == 1) {
             int xc = points.get(0).getX();
             int yc = points.get(0).getY();
-            int radiusValue = radius.getValue();
-            showPointArea.append("Radius = " + radiusValue + "\n");
-            bresemham(xc, yc, radiusValue);
+            int radiusXvalue = radiusX.getValue();
+            int radiusYvalue = radiusY.getValue();
+            showPointArea.append("RadiusX = " + radiusXvalue + "\n");
+            showPointArea.append("RadiusY = " + radiusYvalue + "\n");
+            bresemham(xc, yc, radiusXvalue, radiusYvalue);
         }
     }//GEN-LAST:event_startButtonActionPerformed
 
@@ -119,20 +143,35 @@ public class Bai3_Bresemham extends JPanel {
         addPoint(xc + x, yc - y);
     }
     
-    private void bresemham(int xc, int yc, int radiusValue) {
-        int y = radiusValue;
-        int p = 3 - 2*radiusValue;
-        pc(xc, yc, radiusValue, 0);
-        for(int x = 0 ; x < y ; x++) {
-            if(p < 0) p += 4*x+6;
+    private void bresemham(int xCenter, int yCenter, int radiusX, int radiusY) {
+        int x = 0;
+        int y = radiusY;
+        double c = (double)radiusY/radiusX;
+        c = c*c;
+        double p = 2*c - 2*radiusY + 1;
+        for(x = 0 ; c*x <= y ; x++) {
+            pc(xCenter, yCenter, x, y);
+            if(p < 0) 
+                p += 2*c*(2*x+3);
             else {
-                p += 4*(x-y)+10;
+                p += 4*(1-y)+2*c*(2*x+3);
                 y--;
             }
-            pc(xc, yc, x, y);
-            pc(xc, yc, y, x);
         }
-        pc(xc, yc, y, y);
+        
+        x = radiusX;
+        c = (double)radiusX/radiusY;
+        c = c*c;
+        p = 2*c - 2*radiusX + 1;       
+        for(y = 0 ; c*y <= x ; y++) {
+            pc(xCenter, yCenter, x, y);
+            if(p < 0) 
+                p += 2*c*(2*y+3);
+            else {
+                p += 4*(1-x)+2*c*(2*y+3);
+                x--;
+            }
+        }        
     }   
     
     @Override
@@ -147,8 +186,11 @@ public class Bai3_Bresemham extends JPanel {
     private javax.swing.JPanel controller;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSlider radius;
+    private javax.swing.JSlider radiusX;
+    private javax.swing.JSlider radiusY;
     private javax.swing.JButton resetButton;
     private javax.swing.JTextArea showPointArea;
     private javax.swing.JButton startButton;

@@ -6,6 +6,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final Bai2 bai2 = new Bai2();
     private final Bai3_Bresemham bai3_Bresemham = new Bai3_Bresemham();
     private final Bai3_Midpoint bai3_midpoint = new Bai3_Midpoint();
+    private final Bai4_Bresemham bai4_Bresemham = new Bai4_Bresemham();
     
     public MainFrame() {
         initComponents();
@@ -13,6 +14,7 @@ public class MainFrame extends javax.swing.JFrame {
         view.add("Đoạn thẳng Midpoint", bai2);
         view.add("Đường tròn Bresemham", bai3_Bresemham);
         view.add("Đường tròn Midpoint", bai3_midpoint);
+        view.add("Đường elip Bresemham", bai4_Bresemham); 
     }
 
     @SuppressWarnings("unchecked")
@@ -23,6 +25,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Các giải thuật sinh thực thể cơ sở");
+        setExtendedState(6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -35,7 +38,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addComponent(view, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(853, 587));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

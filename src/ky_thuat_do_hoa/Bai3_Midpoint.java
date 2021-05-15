@@ -21,7 +21,6 @@ public class Bai3_Midpoint extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSlider1 = new javax.swing.JSlider();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         showPointArea = new javax.swing.JTextArea();
@@ -151,7 +150,6 @@ public class Bai3_Midpoint extends JPanel {
     private javax.swing.JPanel controller;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSlider jSlider1;
     private javax.swing.JButton resetButton;
     private javax.swing.JTextArea showPointArea;
     private javax.swing.JSlider slider;
