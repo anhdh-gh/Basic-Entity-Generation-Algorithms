@@ -8,7 +8,7 @@ public class Bai2 extends JPanel {
 
     private ArrayList<Point> listPoint;
     private Point a, b;
-    private int width = 5;
+    private int width = 1;
 
     public Bai2() {
         initComponents();
@@ -72,11 +72,11 @@ public class Bai2 extends JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
         if (a == null) {
-            a = new Point(evt.getX(), evt.getY(), width, Color.red);
+            a = new Point(evt.getX(), evt.getY(), 5, Color.red);
             this.addPoint(a);
 
         } else if (b == null) {
-            b = new Point(evt.getX(), evt.getY(), width, Color.red);
+            b = new Point(evt.getX(), evt.getY(), 5, Color.red);
             this.addPoint(b);
         }
     }//GEN-LAST:event_formMouseClicked
@@ -130,11 +130,11 @@ public class Bai2 extends JPanel {
         if (0 < k && k < 1) {
             int y = st.getY();
             double d = dy - dx / 2;
-            for (int x = st.getX() + 1; x <= end.getX(); x += width - 1) {
+            for (int x = st.getX() + 1; x <= end.getX(); x += width) {
                 if (d <= 0) {
                     d += dy;
                 } else {
-                    y += width - 1;
+                    y += width;
                     d = d + dy - dx;
                 }
                 this.addPoint(new Point(x, y, width, Color.red));
@@ -142,12 +142,12 @@ public class Bai2 extends JPanel {
         } else if (-1 < k && k < 0) {
             int y = st.getY();
             double d = dy + dx / 2;
-            for (int x = st.getX() + 1; x <= end.getX(); x += width - 1) {
+            for (int x = st.getX() + 1; x <= end.getX(); x += width) {
                 if (d >= 0) {
                     d += dy;
 
                 } else {
-                    y -= width - 1;
+                    y -= width;
                     d += dy + dx;
                 }
                 this.addPoint(new Point(x, y, width, Color.red));
@@ -155,7 +155,7 @@ public class Bai2 extends JPanel {
         } else if (k > 1) {
             int x = st.getX();
             double d = dy / 2 - dx;
-            for (int y = st.getY(); y <= end.getY(); y += width - 1) {
+            for (int y = st.getY(); y <= end.getY(); y += width) {
                 if (d >= 0) {
                     d -= dx;
 
@@ -168,12 +168,12 @@ public class Bai2 extends JPanel {
         } else if (k < -1) {
             int x = st.getX();
             double d = -dy / 2 - dx;
-            for (int y = st.getY(); y <= end.getY(); y += width - 1) {
+            for (int y = st.getY(); y <= end.getY(); y += width) {
                 if (d <= 0) {
                     d -= dx;
 
                 } else {
-                    x -= width - 1;
+                    x -= width;
                     d += -dy - dx;
                 }
                 this.addPoint(new Point(x, y, width, Color.red));

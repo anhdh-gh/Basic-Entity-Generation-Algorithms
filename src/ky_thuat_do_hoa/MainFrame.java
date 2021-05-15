@@ -7,6 +7,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final Bai3_Bresemham bai3_Bresemham = new Bai3_Bresemham();
     private final Bai3_Midpoint bai3_midpoint = new Bai3_Midpoint();
     private final Bai4_Bresemham bai4_Bresemham = new Bai4_Bresemham();
+    private final Bai4_Midpoint bai4_MidPoint = new Bai4_Midpoint();
     
     public MainFrame() {
         initComponents();
@@ -15,6 +16,7 @@ public class MainFrame extends javax.swing.JFrame {
         view.add("Đường tròn Bresemham", bai3_Bresemham);
         view.add("Đường tròn Midpoint", bai3_midpoint);
         view.add("Đường elip Bresemham", bai4_Bresemham); 
+        view.add("Đường elip Midpoint", bai4_MidPoint); 
     }
 
     @SuppressWarnings("unchecked")

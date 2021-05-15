@@ -8,7 +8,7 @@ public class Bai3_Midpoint extends JPanel {
 
     private ArrayList<Point> listPoint;
     private Color c = Color.red;
-    private int width = 5;
+    private int width = 1;
     private int radius;
 
     public Bai3_Midpoint() {
@@ -72,16 +72,18 @@ public class Bai3_Midpoint extends JPanel {
         add(jPanel1, java.awt.BorderLayout.LINE_START);
 
         slider.setMajorTickSpacing(25);
+        slider.setMaximum(300);
         slider.setMinorTickSpacing(5);
         slider.setPaintLabels(true);
         slider.setPaintTicks(true);
+        slider.setValue(150);
         add(slider, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
         if (listPoint.isEmpty()) {
-            this.addPoint(new Point(evt.getX(), evt.getY(), width, c));
+            this.addPoint(new Point(evt.getX(), evt.getY(), 5, c));
         }
     }//GEN-LAST:event_formMouseClicked
 
@@ -120,9 +122,9 @@ public class Bai3_Midpoint extends JPanel {
                 d += 2 * x + 3;
             } else {
                 d += 2 * (x - y) + 5;
-                y -= width - 1;
+                y -= width ;
             }
-            x += width - 1;
+            x += width ;
         }
     }
     
