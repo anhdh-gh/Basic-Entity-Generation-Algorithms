@@ -7,7 +7,8 @@ import javax.swing.*;
 public class Bai4_Bresemham extends JPanel {
 
     private final ArrayList<Point> points;
-    
+    private final int width = 5; 
+
     public Bai4_Bresemham() {
         initComponents();
         points = new ArrayList<>();
@@ -131,7 +132,7 @@ public class Bai4_Bresemham extends JPanel {
 
     private void addPoint(int x, int y) {
         if(points.isEmpty()) showPointArea.append("Center: ");
-        points.add(new Point(x, y, 5, Color.RED));
+        points.add(new Point(x, y, this.width, Color.RED));
         showPointArea.append("x = " + x + ", y = " + y + "\n");
         this.repaint();
     }    
@@ -149,13 +150,13 @@ public class Bai4_Bresemham extends JPanel {
         double c = (double)radiusY/radiusX;
         c = c*c;
         double p = 2*c - 2*radiusY + 1;
-        for(x = 0 ; c*x <= y ; x++) {
+        for(x = 0 ; c*x <= y ; x+=this.width) {
             pc(xCenter, yCenter, x, y);
             if(p < 0) 
                 p += 2*c*(2*x+3);
             else {
                 p += 4*(1-y)+2*c*(2*x+3);
-                y--;
+                y-=this.width;
             }
         }
         
@@ -163,13 +164,13 @@ public class Bai4_Bresemham extends JPanel {
         c = (double)radiusX/radiusY;
         c = c*c;
         p = 2*c - 2*radiusX + 1;       
-        for(y = 0 ; c*y <= x ; y++) {
+        for(y = 0 ; c*y <= x ; y+=this.width) {
             pc(xCenter, yCenter, x, y);
             if(p < 0) 
                 p += 2*c*(2*y+3);
             else {
                 p += 4*(1-x)+2*c*(2*y+3);
-                x--;
+                x-=this.width;
             }
         }        
     }   

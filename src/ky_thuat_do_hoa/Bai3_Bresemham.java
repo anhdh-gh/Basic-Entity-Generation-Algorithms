@@ -7,7 +7,8 @@ import javax.swing.*;
 public class Bai3_Bresemham extends JPanel {
 
     private final ArrayList<Point> points;
-    
+    private final int width = 5; 
+
     public Bai3_Bresemham() {
         initComponents();
         points = new ArrayList<>();
@@ -107,7 +108,7 @@ public class Bai3_Bresemham extends JPanel {
 
     private void addPoint(int x, int y) {
         if(points.isEmpty()) showPointArea.append("Center: ");
-        points.add(new Point(x, y, 5, Color.RED));
+        points.add(new Point(x, y, this.width, Color.RED));
         showPointArea.append("x = " + x + ", y = " + y + "\n");
         this.repaint();
     }    
@@ -123,11 +124,11 @@ public class Bai3_Bresemham extends JPanel {
         int y = radiusValue;
         int p = 3 - 2*radiusValue;
         pc(xc, yc, radiusValue, 0);
-        for(int x = 0 ; x < y ; x++) {
+        for(int x = 0 ; x < y ; x+=this.width) {
             if(p < 0) p += 4*x+6;
             else {
                 p += 4*(x-y)+10;
-                y--;
+                y-=this.width;
             }
             pc(xc, yc, x, y);
             pc(xc, yc, y, x);
