@@ -104,7 +104,7 @@ public class Bai9_GiaoDiem2DoanThang extends JPanel {
             }
         } else if (k > 1 || k < -1) {
             if (list.get(0).getY() > list.get(1).getY()) {
-                this.midPoint(list, list.get(0), list.get(1), k);
+                this.midPoint(list, list.get(1), list.get(0), k);
             } else {
                 this.midPoint(list, list.get(0), list.get(1), k);
             }
@@ -183,7 +183,7 @@ public class Bai9_GiaoDiem2DoanThang extends JPanel {
                     d -= dx;
 
                 } else {
-                    x += width - 1;
+                    x += width;
                     d += dy - dx;
                 }
                 this.addPoint(listPoint, new Point(x, y, width, Color.red));

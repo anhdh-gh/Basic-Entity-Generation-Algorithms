@@ -4,15 +4,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class Bai2 extends JPanel {
+public class Bai8_DaGiac extends JPanel {
 
-    private ArrayList<Point> listPoint;
-    private Point a, b;
+    private ArrayList<ArrayList<Point>> listLine;
     private int width = 1;
 
-    public Bai2() {
+    public Bai8_DaGiac() {
         initComponents();
-        listPoint = new ArrayList<>();
+        listLine = new ArrayList<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -71,58 +70,68 @@ public class Bai2 extends JPanel {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
-        if (a == null) {
-            a = new Point(evt.getX(), evt.getY(), 5, Color.red);
-            this.addPoint(a);
-
-        } else if (b == null) {
-            b = new Point(evt.getX(), evt.getY(), 5, Color.red);
-            this.addPoint(b);
+        if (listLine.isEmpty()) {
+            ArrayList<Point> listPoint = new ArrayList<>();
+            Point p = new Point(evt.getX(), evt.getY(), 5, Color.red);
+            this.addPoint(listPoint, p);
+            listLine.add(listPoint);
+        } else {
+            ArrayList<Point> listPoint = new ArrayList<>();
+            Point p = new Point(evt.getX(), evt.getY(), 5, Color.red);
+            this.addPoint(listLine.get(listLine.size() - 1), p);
+            this.drawLine(listLine.get(listLine.size() - 1));
+            this.addPoint(listPoint, p);
+            listLine.add(listPoint);
         }
+
     }//GEN-LAST:event_formMouseClicked
 
-    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        // TODO add your handling code here:
-        while (listPoint.size() == 2) {
-            double dx = b.getX() - a.getX();
-            double dy = b.getY() - a.getY();
-            double k = dy / dx;
-            System.out.println(k);
-            showPointArea.append("k = " + k + "\n");
-            if (0 < k && k < 1 || -1 < k && k < 0) {
-                if (a.getX() > b.getX()) {
-                    this.midPoint(b, a, k);
-                } else {
-                    this.midPoint(a, b, k);
-                }
-            } else if (k > 1 || k < -1) {
-                if (a.getY() > b.getY()) {
-                    this.midPoint(b, a, k);
-                } else {
-                    this.midPoint(a, b, k);
-                }
+    public void drawLine(ArrayList<Point> list) {
+        double dx = list.get(1).getX() - list.get(0).getX();
+        double dy = list.get(1).getY() - list.get(0).getY();
+        double k = dy / dx;
+        if (0 < k && k < 1 || -1 < k && k < 0) {
+            if (list.get(0).getX() > list.get(1).getX()) {
+                this.midPoint(list, list.get(1), list.get(0), k);
+            } else {
+                this.midPoint(list, list.get(0), list.get(1), k);
+            }
+        } else if (k > 1 || k < -1) {
+            if (list.get(0).getY() > list.get(1).getY()) {
+                this.midPoint(list, list.get(1), list.get(0), k);
+            } else {
+                this.midPoint(list, list.get(0), list.get(1), k);
             }
         }
+    }
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        // TODO add your handling code here:       
+        this.addPoint(listLine.get(listLine.size() - 1), listLine.get(0).get(0));
+        this.drawLine(listLine.get(listLine.size() - 1));
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
-        listPoint.clear();
-        a = null;
-        b = null;
+        for (int i = 0; i < listLine.size(); i++) {
+            listLine.get(i).clear();
+        }
+        listLine.clear();
         showPointArea.setText("");
+        startButton.setEnabled(true);
         this.repaint();
     }//GEN-LAST:event_resetButtonActionPerformed
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        listPoint.forEach(p -> {
-            p.draw(g);
-        });
+        for (int i = 0; i < listLine.size(); i++) {
+            for (Point p : listLine.get(i)) {
+                p.draw(g);
+            }
+        }
     }
 
-    private void midPoint(Point st, Point end, double k) {
+    private void midPoint(ArrayList<Point> listPoint, Point st, Point end, double k) {
 
         double dx = end.getX() - st.getX();
         double dy = end.getY() - st.getY();
@@ -137,7 +146,7 @@ public class Bai2 extends JPanel {
                     y += width;
                     d = d + dy - dx;
                 }
-                this.addPoint(new Point(x, y, width, Color.red));
+                this.addPoint(listPoint, new Point(x, y, width, Color.red));
             }
         } else if (-1 < k && k < 0) {
             int y = st.getY();
@@ -150,7 +159,7 @@ public class Bai2 extends JPanel {
                     y -= width;
                     d += dy + dx;
                 }
-                this.addPoint(new Point(x, y, width, Color.red));
+                this.addPoint(listPoint, new Point(x, y, width, Color.red));
             }
         } else if (k > 1) {
             int x = st.getX();
@@ -163,7 +172,7 @@ public class Bai2 extends JPanel {
                     x += width;
                     d += dy - dx;
                 }
-                this.addPoint(new Point(x, y, width, Color.red));
+                this.addPoint(listPoint, new Point(x, y, width, Color.red));
             }
         } else if (k < -1) {
             int x = st.getX();
@@ -176,22 +185,21 @@ public class Bai2 extends JPanel {
                     x -= width;
                     d += -dy - dx;
                 }
-                this.addPoint(new Point(x, y, width, Color.red));
+                this.addPoint(listPoint, new Point(x, y, width, Color.red));
             }
         }
     }
 
-    private void addPoint(Point p) {
+    private void addPoint(ArrayList<Point> listPoint, Point p) {
         if (listPoint.isEmpty()) {
-            showPointArea.append("Point 1: ");
             listPoint.add(p);
         } else if (listPoint.size() == 1) {
-            showPointArea.append("Point 2: ");
             listPoint.add(p);
         } else {
             listPoint.add(p);
         }
-        showPointArea.append("x = " + p.getX() + ", y = " + p.getY() + "\n");
+        
+        showPointArea.append("Point " + listLine.size() + ": " + "x = " + p.getX() + ", y = " + p.getY() + "\n");
         this.repaint();
     }
 
