@@ -11,7 +11,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final Bai9_GiaoDiem2DoanThang bai9 = new Bai9_GiaoDiem2DoanThang();
     private final Bai8_DaGiac bai8 = new Bai8_DaGiac();
     private final Bai7 bai7 = new Bai7();
-    private final Clock clock = new Clock();
+    private final ClockPanel clockPanel = new ClockPanel();
     
     public MainFrame() {
         initComponents();
@@ -23,7 +23,7 @@ public class MainFrame extends javax.swing.JFrame {
         view.add("Đường elip Midpoint", bai4_MidPoint); 
         view.add("Sinh ký tự: ", bai7);
         view.add("Vẽ đa giác", bai8); 
-        
+        view.add("Clock", clockPanel);
     }
 
     @SuppressWarnings("unchecked")
