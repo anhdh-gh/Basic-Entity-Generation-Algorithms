@@ -97,7 +97,7 @@ public class Bai1 extends JPanel {
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         points.clear();
         showPoints.setText("");
-        this.repaint();
+        this.repaint(); 
     }//GEN-LAST:event_resetActionPerformed
 
     private void addPoint(int x, int y) {
