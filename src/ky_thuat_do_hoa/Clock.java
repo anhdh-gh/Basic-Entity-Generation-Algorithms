@@ -116,10 +116,11 @@ public class Clock extends JPanel implements Runnable {
             } else {
                 this.midPoint(list, list.get(0), list.get(1), k);
             }
+        } else if (k == 0) {
+            this.midPoint(list, list.get(0), list.get(1), k);
         }
     }
     private void midPoint(ArrayList<Point> listPoint, Point st, Point end, double k) {
-
         double dx = end.getX() - st.getX();
         double dy = end.getY() - st.getY();
         Color c = Color.red;
@@ -179,12 +180,13 @@ public class Clock extends JPanel implements Runnable {
                 }
                 this.addPoint(listPoint, new Point(x, y, width, c));
             }
-        } else if(k == 0) {System.out.println("aaaaa");
-            int x = st.getX();
-            for(int y = st.getY(); y <= end.getY(); y+= width) {
-                x++;
-                this.addPoint(listPoint, new Point(x, y, width, c));
-            }
+        } else if(k == 0) {
+            if(st.getX() < end.getX())
+                for(int x = st.getX(); x < end.getX() ; x+=width)
+                    this.addPoint(listPoint, new Point(x, end.getY(), width, c));
+            else 
+                for(int x = st.getX(); x > end.getX() ; x-=width)
+                    this.addPoint(listPoint, new Point(x, end.getY(), width, c));                
         }
     }
 
