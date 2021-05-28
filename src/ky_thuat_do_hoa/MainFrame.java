@@ -10,6 +10,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final Bai4_Midpoint bai4_MidPoint = new Bai4_Midpoint();
     private final Bai9_GiaoDiem2DoanThang bai9 = new Bai9_GiaoDiem2DoanThang();
     private final Bai8_DaGiac bai8 = new Bai8_DaGiac();
+    private final Clock clock = new Clock();
     
     
     public MainFrame() {
@@ -21,7 +22,7 @@ public class MainFrame extends javax.swing.JFrame {
         view.add("Đường elip Bresemham", bai4_Bresemham); 
         view.add("Đường elip Midpoint", bai4_MidPoint); 
         view.add("Vẽ đa giác", bai8); 
-        view.add("Tìm giao điểm hai đoạn thẳng", bai9);
+        
     }
 
     @SuppressWarnings("unchecked")
