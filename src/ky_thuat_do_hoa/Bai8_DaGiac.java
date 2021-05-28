@@ -7,11 +7,14 @@ import javax.swing.*;
 public class Bai8_DaGiac extends JPanel {
 
     private ArrayList<ArrayList<Point>> listLine;
+    private ArrayList<Point> border;
     private int width = 1;
+    private int xMin, yMin, xMax, yMax;
 
     public Bai8_DaGiac() {
         initComponents();
         listLine = new ArrayList<>();
+        border = new ArrayList<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -73,11 +76,25 @@ public class Bai8_DaGiac extends JPanel {
         if (listLine.isEmpty()) {
             ArrayList<Point> listPoint = new ArrayList<>();
             Point p = new Point(evt.getX(), evt.getY(), 5, Color.red);
+            xMin = xMax = evt.getX();
+            yMin = yMax = evt.getY();
             this.addPoint(listPoint, p);
             listLine.add(listPoint);
         } else {
             ArrayList<Point> listPoint = new ArrayList<>();
             Point p = new Point(evt.getX(), evt.getY(), 5, Color.red);
+            if (xMin > p.getX()) {
+                xMin = p.getX();
+            }
+            if (xMax < p.getX()) {
+                xMax = p.getX();
+            }
+            if (yMin > p.getY()) {
+                yMin = p.getY();
+            }
+            if (yMax < p.getY()) {
+                yMax = p.getY();
+            }
             this.addPoint(listLine.get(listLine.size() - 1), p);
             this.drawLine(listLine.get(listLine.size() - 1));
             this.addPoint(listPoint, p);
@@ -108,14 +125,37 @@ public class Bai8_DaGiac extends JPanel {
         // TODO add your handling code here:       
         this.addPoint(listLine.get(listLine.size() - 1), listLine.get(0).get(0));
         this.drawLine(listLine.get(listLine.size() - 1));
-    }//GEN-LAST:event_startButtonActionPerformed
+        
 
+        for (int i = yMin; i <= yMax; i++) {
+            ArrayList<Point> list = new ArrayList<>();
+            for (int j = xMin; j < xMax; j++) {
+                list.add(new Point(j, i, width, Color.red));
+            }
+            list.retainAll(border);
+            for (int l = 0; l < list.size() - 1; l++) {
+                ArrayList<Point> arr = new ArrayList<>();
+                if (list.get(l + 1).getX() - list.get(l).getX() != 1) {
+                    this.straight(list.get(l).getX(), list.get(l + 1).getX(), i);
+                }
+            }
+        }
+        startButton.setEnabled(false);
+    }//GEN-LAST:event_startButtonActionPerformed
+    private void straight(int st, int end, int y) {
+        for (int i = st; i < end; i++) {
+            border.add(new Point(i, y, width, Color.red));
+            this.repaint();
+        }
+        
+    }
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
         for (int i = 0; i < listLine.size(); i++) {
             listLine.get(i).clear();
         }
         listLine.clear();
+        border.clear();
         showPointArea.setText("");
         startButton.setEnabled(true);
         this.repaint();
@@ -124,10 +164,8 @@ public class Bai8_DaGiac extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (int i = 0; i < listLine.size(); i++) {
-            for (Point p : listLine.get(i)) {
-                p.draw(g);
-            }
+        for (Point p : border) {
+            p.draw(g);
         }
     }
 
@@ -192,14 +230,13 @@ public class Bai8_DaGiac extends JPanel {
 
     private void addPoint(ArrayList<Point> listPoint, Point p) {
         if (listPoint.isEmpty()) {
+            showPointArea.append("Point " + listLine.size() + ": " + "x = " + p.getX() + ", y = " + p.getY() + "\n");
             listPoint.add(p);
-        } else if (listPoint.size() == 1) {
-            listPoint.add(p);
+            border.add(p);
         } else {
             listPoint.add(p);
+            border.add(p);
         }
-        
-        showPointArea.append("Point " + listLine.size() + ": " + "x = " + p.getX() + ", y = " + p.getY() + "\n");
         this.repaint();
     }
 
