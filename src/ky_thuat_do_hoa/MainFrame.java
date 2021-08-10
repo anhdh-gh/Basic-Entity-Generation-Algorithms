@@ -23,6 +23,7 @@ public class MainFrame extends javax.swing.JFrame {
         view.add("Đường elip Midpoint", bai4_MidPoint); 
         view.add("Sinh ký tự: ", bai7);
         view.add("Vẽ đa giác", bai8); 
+        view.add("Giao điểm giữa hai đoạn thẳng", bai9);
         view.add("Clock", clockPanel);
     }
 
