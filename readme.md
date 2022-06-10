@@ -16,7 +16,7 @@
 	- Sinh đa giác: 
 		- Với đường bao thì dùng midpoint để nối các điểm với nhau, khi ấn start sẽ nối điểm đầu với cuối
 		- Với tô kín thì dùng scanline (
-			- link tham khảo: https://tuhoclaptrinh.cachhoc.net/2017/03/19/bai-8-thuat-toan-to-mau-scanline/?fbclid=IwAR0p2RE2jobNpUp7lM9v4RmujZsJTfMjvBNoELyqc93Pw_HXnCmZsN2D6jE#1_Gioi_thieu
+			- Tham khảo: https://tuhoclaptrinh.cachhoc.net/2017/03/19/bai-8-thuat-toan-to-mau-scanline/?fbclid=IwAR0p2RE2jobNpUp7lM9v4RmujZsJTfMjvBNoELyqc93Pw_HXnCmZsN2D6jE#1_Gioi_thieu
 	- Tìm giao điểm: 
 		- Vẽ 2 đoạn thẳng với midpoint.
 		- Tìm trong list những điểm trùng nhau.
