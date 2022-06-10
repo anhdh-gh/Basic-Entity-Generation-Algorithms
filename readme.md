@@ -1,4 +1,4 @@
-## Ứng dụng destop minh họa các giải thuật sinh thực thể cơ sở
+## Ứng dụng desktop minh họa các giải thuật sinh thực thể cơ sở
 ## Công nghệ sử dụng
 - Java 2D
 - Java Swing
