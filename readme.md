@@ -1,7 +1,13 @@
 ## Ứng dụng desktop minh họa các giải thuật sinh thực thể cơ sở
+
 ## Công nghệ sử dụng
 - Java 2D
 - Java Swing
+
+## Hướng dân run code
+- Download [JDK 8](https://www.oracle.com/java/technologies/downloads/#java8) (nếu chưa có) 
+
+
 ## Hình ảnh preview
 ### Thuật toán sinh đoạn thẳng Bresenham
 <p align="center">
