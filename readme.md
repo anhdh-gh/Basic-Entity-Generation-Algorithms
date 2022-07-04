@@ -6,7 +6,7 @@
 
 ## Hướng dân run code
 - Download [JDK 8](https://www.oracle.com/java/technologies/downloads/#java8) (nếu chưa có) 
-
+- Download [ứng dụng](https://github.com/anhdh-gh/Basic-Entity-Generation-Algorithms/releases/tag/v1.0.0) (Basic-Entity-Generation-Algorithms.jar) 
 
 ## Hình ảnh preview
 ### Thuật toán sinh đoạn thẳng Bresenham
